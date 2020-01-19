@@ -11,8 +11,8 @@
 
 1. client and server model we send request from the browser to the server
 2. the server gets dynamic content from db or session
-3. renders a template with dynamic content and sends the template as response
-4. we use sessions to handle authentication
+3. we use sessions to handle user authentication
+4. the server renders a template with dynamic content and sends the template as response
 
 ## how to use
 
