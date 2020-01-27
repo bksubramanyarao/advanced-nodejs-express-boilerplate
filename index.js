@@ -89,7 +89,7 @@ app.use(web_routes);
 
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).render('pages/500');
+  res.status(500).render('page/500');
 });
 
 
