@@ -50,7 +50,9 @@ exports.postUserRegister = async (req, res, next) => {
 	var { email, password } = req.body;
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(422).render('auth/register', { errors: errors.array() });
+		return res.status(422).render(
+			'auth/register', { flash: { errors: errors.array() } }
+		);
 	}
 	try {
 		password = await bcryptjs.hash(password, 12);
@@ -58,7 +60,8 @@ exports.postUserRegister = async (req, res, next) => {
 			_id: mongo_id, email, password
 		});
 
-		res.status(201).render('auth/register', {	success: 201 });
+		req.flash('success', 201);
+		res.status(201).redirect('/register');
 	} catch (err) {
 		next(err);
 	}

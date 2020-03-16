@@ -28,11 +28,11 @@
 
   <main>
     <div>
-      <% if (locals.errors) { %>
-        <% for (error of errors) { %>
+      <%_ if (locals.flash.errors) { _%>
+        <%_ for (error of locals.flash.errors) { _%>
           <%= error.msg; %>
-        <% } %>
-      <% } %>
+        <%_ } _%>
+      <%_ } _%>
     </div>
     <form action="/login" method="post">
       <input type="hidden" name="_csrf" value="<%= csrfToken; %>">

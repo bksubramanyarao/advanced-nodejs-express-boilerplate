@@ -75,7 +75,9 @@ exports.postUserLoginValidation = [
 exports.postUserLogin = async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
-		return res.status(422).json({ errors: errors.array() });
+		return res.status(422).render(
+			'auth/login', { flash: { errors: errors.array() } }
+		);
 	}
 	passport.authenticate('user', (err, user, info) => {
 		if (err) {
@@ -92,9 +94,8 @@ exports.postUserLogin = async (req, res, next) => {
 				res.status(201).redirect('/profile');
 			});
 		} else {
-			res.status(409).render('auth/login', {
-				errors: [{ msg: info.message }]
-			});
+			req.flash('errors', [{ msg: info.message }]);
+			res.status(409).redirect('/login');
 		}
 	})(req, res, next);
 };

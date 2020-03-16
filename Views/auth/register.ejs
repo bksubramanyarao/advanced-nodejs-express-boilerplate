@@ -28,12 +28,12 @@
 
   <main>
     <div>
-      <% if (locals.errors) { %>
-        <% for (error of errors) { %>
-          <h2><%= error.msg; %></h2>
-        <% } %>
-      <% } %>
-      <% if (locals.success == 201) { %>
+      <%_ if (locals.flash.errors) { _%>
+        <%_ for (error of locals.flash.errors) { _%>
+          <%= error.msg; %>
+        <%_ } _%>
+      <%_ } _%>
+      <% if (locals.flash.success == 201) { %>
         <h2>register successful</h2>
       <% } %>
     </div>
