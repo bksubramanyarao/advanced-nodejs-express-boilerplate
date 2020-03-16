@@ -6,6 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const reqFlash = require('req-flash');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const csurf = require('csurf');
@@ -70,12 +71,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+app.use(reqFlash({ locals: 'flash' }));
+
+
 // csrf config
 app.use(csurf());
 
 // globals
 app.use((req, res, next) => {
-  // console.info(req.session);
+  console.info(req.session);
   res.locals.csrfToken = req.csrfToken();
   next();
 });
@@ -97,7 +101,7 @@ const PORT = process.env.PORT || 3000;
 // db connect
 mongoose.connect(mongodbConUrl, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
   .then(() => {
-    app.listen(PORT, (result) => {
+    app.listen(PORT, () => {
       console.log(`http://localhost:${PORT}/`);
     });
   })
