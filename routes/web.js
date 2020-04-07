@@ -6,6 +6,7 @@ const PageController = require('../Controllers/PageController');
 
 
 router.get('/', PageController.getHome);
+router.get('/about', PageController.getAbout);
 
 
 
