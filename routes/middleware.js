@@ -17,7 +17,7 @@ exports.isUser = async (req, res, next) => {
   if (req.session.passport && req.session.passport.user) {
     return next();
   } else {
-    return res.status(401).redirect('/register');
+    return res.status(401).redirect('/login');
   }
 };
 

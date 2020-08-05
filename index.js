@@ -79,8 +79,11 @@ app.use(csurf());
 
 // globals
 app.use((req, res, next) => {
-  console.info(req.session);
+	console.info(req.session);
+	
   res.locals.csrfToken = req.csrfToken();
+	res.locals.isUser = req.isAuthenticated();
+	res.locals.isGuest = req.isUnauthenticated();
   next();
 });
 

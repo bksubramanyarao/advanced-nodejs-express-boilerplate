@@ -1,0 +1,36 @@
+<%_ if (totalPages > 0) { _%>
+	<ul class="pagination">
+
+		<%_ var query_filter = query_filter || 0 _%>
+
+		<%_ if (page == 1) { _%>
+			<li class="page-item disabled"><a class="page-link">First</a></li>
+		<%_ } else { _%>
+			<li class="page-item"><a class="page-link" href="<%= url %>/?page=1<%= (query_filter.length > 0) ? '&'+query_filter:'' %>">First</a></li>
+		<%_ } _%>
+
+		<%_ var i = (Number(page) > 5 ? Number(page) - 4 : 1) _%>
+
+		<%_ if (i !== 1) { _%>
+			<li class="page-item disabled"><a class="page-link">...</a></li>
+		<%_ } _%>
+
+		<%_ for (; i <= (Number(page) + 4) && i <= totalPages; i++) { _%>
+			<%_ if (i == page) { _%>
+				<li class="page-item active"><a class="page-link"><%= i %></a></li>
+			<%_ } else { _%>
+				<li class="page-item"><a class="page-link" href="<%= url %>?page=<%= i %><%= (query_filter.length > 0) ? '&'+query_filter:'' %>"><%= i %></a></li>
+			<%_ } _%>
+			<%_ if (i == Number(page) + 4 && i < totalPages) { _%>
+				<li class="page-item disabled"><a class="page-link">...</a></li>
+			<%_ } _%>
+		<%_ } _%>
+
+		<%_ if (page == totalPages) { _%>
+			<li class="page-item disabled"><a class="page-link">Last</a></li>
+		<%_ } else { _%>
+			<li class="page-item"><a class="page-link" href="<%= url %>?page=<%= totalPages %><%= (query_filter.length > 0) ? '/?'+query_filter:'' %>">Last</a></li>
+		<%_ } _%>
+
+	</ul>
+<%_ } _%>

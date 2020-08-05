@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="csrf-token" content="<%= csrfToken %>">
+	<title>blog - index</title>
+	<%- include('../layouts/styles'); %>
+</head>
+
+<body id="blog-index">
+
+	<%- include('../layouts/nav'); %>
+	
+	<main>
+		<section class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">blog index</h1>
+			</div>
+		</section>
+		<section class="container">
+			<div class="row">
+				<div class="col">
+					<%_ if (locals.errors) { _%>
+						<%_ for (error of errors) { _%>
+							<div class="alert alert-warning alert-dismissible fade show" role="alert">
+								<%= error.msg; %>
+								<button type="button" class="close" data-dismiss="alert">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						<%_ } _%>
+					<%_ } _%>
+					<%_ if (locals.flash.success_msg == 201) { _%>
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							post created successfully
+							<button type="button" class="close" data-dismiss="alert">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					<%_ } _%>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<%_ if (locals.blog) { _%>
+						<%_ for (blog_post of blog) { _%>
+							post_title: <%= blog_post.post_title; %><br>
+							post_slug: <%= blog_post.post_slug; %><br>
+							post_body: <%= blog_post.post_body; %><br>
+							<form action="/blog/<%= blog_post._id; %>/?method=DELETE" method="post">
+								<a href="/blog/<%= blog_post._id; %>">show</a> || 
+								<a href="/blog/<%= blog_post._id; %>/edit">update</a> || 
+								<input type="hidden" name="_csrf" value="<%= csrfToken; %>">
+								<button type="submit" class="btn btn-link p-0">delete</button>
+							</form><br>
+							<br>
+						<%_ } _%>
+						<hr>
+						<%- include('../layouts/paginate', { totalPages, page, url: '/blog/' }); %>
+					<%_ } _%>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	
+	
+	<%- include('../layouts/scripts'); %>
+</body>
+
+</html>

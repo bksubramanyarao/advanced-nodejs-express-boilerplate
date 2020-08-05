@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="csrf-token" content="<%= csrfToken %>">
+	<title>blog - show</title>
+	<%- include('../layouts/styles'); %>
+</head>
+
+<body id="blog-show">
+
+	<%- include('../layouts/nav'); %>
+	
+	<main>
+		<section class="jumbotron jumbotron-fluid">
+			<div class="container">
+				<h1 class="display-4">blog show</h1>
+			</div>
+		</section>
+		<section class="container">
+			<div class="row">
+				<div class="col">
+					<%_ if (locals.errors) { _%>
+						<%_ for (error of errors) { _%>
+							<div class="alert alert-warning alert-dismissible fade show" role="alert">
+								<%= error.msg; %>
+								<button type="button" class="close" data-dismiss="alert">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						<%_ } _%>
+					<%_ } _%>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<%_ if (locals.blog) { _%>
+						_id: <%= blog._id; %><br>
+						user_id: <%= blog.user_id; %><br>
+						post_title: <%= blog.post_title; %><br>
+						post_slug: <%= blog.post_slug; %><br>
+						post_body: <%= blog.post_body; %><br>
+					<%_ } _%>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	
+	<%- include('../layouts/scripts'); %>
+</body>
+
+</html>

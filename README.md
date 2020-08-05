@@ -3,9 +3,11 @@
 1. mvc pattern
 2. configured session with mongo-store
 3. basic authentication with passport-local
-4. webpack configured with sass
-5. router configured
-6. configured email and file upload
+4. frontend bootstrap & vue
+5. webpack configured with sass
+6. router configured
+7. configured email and file upload
+8. simple blog with pagination
 
 ## traditional web applications
 

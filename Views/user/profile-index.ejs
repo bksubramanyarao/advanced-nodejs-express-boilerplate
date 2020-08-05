@@ -2,32 +2,25 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="csrf-token" content="<%= csrfToken %>">
-  <title>profile page</title>
-  <%- include('../layouts/styles'); %>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="csrf-token" content="<%= csrfToken %>">
+	<title>profile page</title>
+	<%- include('../layouts/styles'); %>
 </head>
 
 <body>
-  <h1>profile page</h1>
 
-  <nav>
-		<ul>
-			<li><a href="/">home</a></li>
-			<li><a href="/about">about us</a></li>
-			<li><a href="/login">login</a></li>
-			<li><a href="/register">register</a></li>
-      <li><a href="/profile">profile</a></li>
-      <form action="/logout/?_method=DELETE" method="post">
-        <input type="hidden" name="_csrf" value="<%= csrfToken; %>">
-        <button type="submit">logout</button>
-      </form>
-		</ul>
-  </nav>
-  
-  <%- include('../layouts/scripts'); %>
+	<%- include('../layouts/nav'); %>
+	
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">profile page</h1>
+		</div>
+	</div>
+	
+	<%- include('../layouts/scripts'); %>
 </body>
 
 </html>
