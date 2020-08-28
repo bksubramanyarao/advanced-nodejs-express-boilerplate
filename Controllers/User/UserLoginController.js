@@ -100,6 +100,11 @@ exports.postUserLogin = async (req, res, next) => {
 	})(req, res, next);
 };
 
+/**
+ ** ROUTE_FILE: user.js
+ ** URL: /logout
+ ** DESCRIPTION: logout a user
+ */
 exports.deleteUserLogout = async (req, res, next) => {
 	try {
 		delete req.session.passport;

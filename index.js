@@ -1,4 +1,6 @@
-const mongodbConUrl = 'mongodb://localhost:27017/advanced-nodejs-express-boilerplate';
+require('dotenv').config();
+
+const mongodb_con_url = 'mongodb://localhost:27017/advanced-nodejs-express-boilerplate';
 const mongoose = require('mongoose');
 
 const express = require('express');
@@ -23,17 +25,21 @@ const web_routes = require('./routes/web');
 
 
 /* ========= config start ========= */
-app.locals.main_url = 'http://localhost:3000';
+app.locals.APP_URL = process.env.APP_URL;
 
 app.disable('x-powered-by');
 
 
 app.use(session({
-  secret: 'foo',
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 * 600 } //10h
+	secret: process.env.APP_KEY,
+	store: new MongoStore({ mongooseConnection: mongoose.connection }),
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		maxAge: 60000 * 60, //1h
+		httpOnly: true,
+		sameSite: 'strict'
+	}
 }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,19 +57,19 @@ app.use(express.static('public'));
 
 // smtp config
 mailer.extend(app, {
-  from: 'no-reply@example.com',
-  host: 'smtp.mailtrap.io',
-  port: 2525,
-  transportMethod: 'SMTP',
-  auth: {
-    user: "1b72de9adecbe9",
-    pass: "f5f2cb92f0d419"
-  }
+	from: process.env.MAIL_FROM,
+	host: process.env.MAIL_HOST,
+	port: process.env.MAIL_PORT,
+	transportMethod: process.env.MAIL_DRIVER,
+	auth: {
+		user: process.env.MAIL_USERNAME,
+		pass: process.env.MAIL_PASSWORD
+	}
 });
 
 // file upload config
 app.use(fileUpload({
-  createParentPath: true
+	createParentPath: true
 }));
 
 
@@ -80,11 +86,11 @@ app.use(csurf());
 // globals
 app.use((req, res, next) => {
 	console.info(req.session);
-	
-  res.locals.csrfToken = req.csrfToken();
+
+	res.locals.csrfToken = req.csrfToken();
 	res.locals.isUser = req.isAuthenticated();
 	res.locals.isGuest = req.isUnauthenticated();
-  next();
+	next();
 });
 
 /* ========= config end ========= */
@@ -95,19 +101,23 @@ app.use(web_routes);
 // routes end
 
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).render('page/500');
+	if (process.env.APP_DEBUG === true) console.log(err);
+	res.status(500).render('page/500');
 });
 
 
-const PORT = process.env.PORT || 3000;
-// db connect
-mongoose.connect(mongodbConUrl, { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`http://localhost:${PORT}/`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// connect db and start server
+async function main() {
+	try {
+		await mongoose.connect(
+			mongodb_con_url,
+			{ useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true }
+		);
+		app.listen(process.env.PORT, 'localhost', () => {
+			console.log(`http://localhost:${process.env.PORT}/`);
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+main();

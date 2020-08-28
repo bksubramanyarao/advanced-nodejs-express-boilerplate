@@ -1,13 +1,15 @@
 # advanced nodejs express boilerplate
 
 1. mvc pattern
-2. configured session with mongo-store
-3. basic authentication with passport-local
-4. frontend bootstrap & vue
-5. webpack configured with sass
-6. router configured
-7. configured email and file upload
-8. simple blog with pagination
+2. configured .env
+3. configured session with mongo-store
+4. basic authentication with passport-local
+5. security measures ( CSRF, cookies, form validation )
+6. frontend bootstrap & vue
+7. webpack configured with sass
+8. router configured
+9. configured email and file upload
+10. simple blog with pagination
 
 ## traditional web applications
 

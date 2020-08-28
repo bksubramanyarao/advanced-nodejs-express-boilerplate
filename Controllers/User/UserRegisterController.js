@@ -55,7 +55,7 @@ exports.postUserRegister = async (req, res, next) => {
 		);
 	}
 	try {
-		password = await bcryptjs.hash(password, 12);
+		password = await bcryptjs.hash(password, process.env.PASSWORD_SECRET);
 		const new_user = await User.create({
 			_id: mongo_id, email, password
 		});
